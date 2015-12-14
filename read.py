@@ -28,3 +28,18 @@ def read_sample_train():
             print 'Error: ID ckeck failed!'
             sys.exit(0)
     return ID_map, X_train, Y_train
+
+def read_truth():
+    ID_map = []
+    test = []
+    print 'Reading Truth.csv'
+    with open('../ML_final_project/sample_test_x.csv', 'r') as f:
+        reader = csv.reader(f)
+        test = np.array(list(reader)[1:]).astype(int)
+        ID_map = test[:, 0]
+        test = test[:, 1:]
+    f.close()
+    if len(ID_map) != len(test):
+        print 'Error: ID_map len. != test len.'
+        sys.exit(0)
+    return ID_map, test
