@@ -3,19 +3,39 @@ import numpy as np
 import read
 from sklearn import svm
 from sklearn.externals import joblib
+import sys
+import time
 
 def main():
+   c, k = handleArgv()
    ID_map, X_train, Y_train = read.read_sample_train()
-   print 'Training rbf C= 0.1 svm..'
-   model = svm.SVC(C=0.01, kernel='rbf', gamma=1, tol=1e-7, shrinking=True, verbose=True)
-   #model = svm.SVC(C=0.1, kernel='linear', shrinking=True, verbose=True)
-   model.fit(X_train, Y_train)
+   model = doSVM((X_train, Y_train), (c, k))
    print 'Store the model...'
-   joblib.dump(model, 'model_rbf.pkl')
+   current = int(time.time())
+   joblib.dump(model, 'modle_'+k+'_'+current+'.pkl')
    print 'Using model to predict'
    predict = model.predict(X_train)
    Ein = np.count_nonzero(predict != Y_train)
    print Ein/float(len(predict))
+
+def handleArgv():
+    if len(sys.argv) < 3:
+        print 'Error: There should be two argv'
+        sys.exit(0)
+    if sys.argv[2] != 'rbf' and sys.argv[2] != 'linear':
+        print 'Error: Second argv should be rbf or linear'
+        sys.exit(0)
+    return float(sys.argv[1]), sys.argv[2]
+
+def doSVM(data, arg):
+    print 'Training kernel = ',arg[1],', C = ',arg[0], 'SVM...'
+    model = 0
+    if arg[1] == 'rbf':
+        model = svm.SVC(C=arg[0], kernel=arg[1], gamma=1, tol=1e-7, shrinking=True, verbose=True)
+    else:
+        model = svm.SVC(C=arg[0], kernel=arg[1], shrinking=True, verbose=True)
+    model.fit(data[0], data[1])
+    return model
 
 if __name__ == '__main__':
     main()
