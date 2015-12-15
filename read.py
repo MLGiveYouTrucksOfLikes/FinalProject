@@ -19,6 +19,7 @@ def read_sample_train():
         reader = csv.reader(f)
         X_train = np.array(list(reader)[1:]).astype(float)
         ID_map = X_train[:, 0]
+        readDepthLimit = len(ID_map)
         '''
             Limit could be canceled by setting readDepthLimit = len(ID_map) here
         '''
