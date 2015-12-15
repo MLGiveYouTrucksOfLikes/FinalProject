@@ -7,25 +7,51 @@ import sys
 import time
 
 def main():
-   c, k = handleArgv()
+   c, k , fold, save= handleArgv()
    ID_map, X_train, Y_train = read.read_sample_train()
-   model = doSVM((X_train, Y_train), (c, k))
-   print 'Store the model...'
+   '''
+    Cross Validation
+   '''
+   arr = np.arange(len(Y_train))
+   np.random.shuffle(arr)
+   X_cross_train, Y_cross_train, X_cross_val, Y_cross_val = 0,0,0,0
+   perWindow = len(Y_train) / fold
+   bestEval, bestModel = 1.0, 0
+   for fold_i in xrange(fold):
+       print '@ Fold ',fold_i
+       X_cross_train = np.concatenate((X_train[arr[:fold_i*perWindow]], X_train[arr[(fold_i+1)*perWindow:]]), axis=0)
+       Y_cross_train = np.concatenate((Y_train[arr[:fold_i*perWindow]], Y_train[arr[(fold_i+1)*perWindow:]]), axis=0)
+       X_cross_val = X_train[arr[fold_i*perWindow+1: (fold_i+1)*perWindow]]
+       Y_cross_val = Y_train[arr[fold_i*perWindow+1: (fold_i+1)*perWindow]]
+       currentModel = doSVM((X_cross_train, Y_cross_train), (c, k))
+       cross_predcit = currentModel.predict(X_cross_val)
+       currentEval = np.count_nonzero(cross_predcit != Y_cross_val) / float(len(Y_cross_val))
+       print 'Eval = ',currentEval
+       if currentEval < bestEval:
+           bestEval = currentEval
+           bestModel = currentModel
    current = str(int(time.time()))
-   joblib.dump(model, 'model/model_'+k+'_'+current+'.pkl')
-   print 'Using model to predict'
-   predict = model.predict(X_train)
-   Ein = np.count_nonzero(predict != Y_train)
-   print Ein/float(len(predict))
+   if save == 1:
+       print 'Store the model...'
+       joblib.dump(bestModel, 'model/model_'+k+'_'+current+'.pkl')
+   print '*********************************************************************'
+   print '                            Best Eval = ', bestEval
+   print '                            Current Time = ', current
+   print '*********************************************************************'
 
 def handleArgv():
-    if len(sys.argv) < 3:
-        print 'Error: There should be two argv'
+    if len(sys.argv) < 5:
+        print 'Error: There should be four argvs'
+        printArgv()
         sys.exit(0)
     if sys.argv[2] != 'rbf' and sys.argv[2] != 'linear' and sys.argv[2] != 'poly' and sys.argv[2] != 'linearSVC':
         print 'Error: Second argv should be [rbf||linear||poly||linearSVC]'
+        printArgv()
         sys.exit(0)
-    return float(sys.argv[1]), sys.argv[2]
+    return float(sys.argv[1]), sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
+
+def printArgv():
+    print 'python svm.py [C] [model type] [Cross validation folds] [Enable save model]'
 
 def doSVM(data, arg):
     print 'Training kernel(or type) = ',arg[1],', C = ',arg[0], 'SVM...'

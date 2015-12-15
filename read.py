@@ -23,7 +23,8 @@ def read_sample_train():
         '''
             Limit could be canceled by setting readDepthLimit = len(ID_map) here
         '''
-        X_train = normalize(X_train[:, 5:][:readDepthLimit])
+        #X_train = normalize(X_train[:, 5:][:readDepthLimit])
+        X_train = X_train[:, 5:]
     f.close()
     with open('../ML_final_project/truth_train.csv', 'r') as f:
         reader = csv.reader(f)
@@ -47,7 +48,8 @@ def read_truth():
         reader = csv.reader(f)
         test = np.array(list(reader)[1:]).astype(float)
         ID_map = test[:, 0]
-        test = normalize(test[:, 5:])
+        #test = normalize(test[:, 5:])
+        test = test[:, 5:]
     f.close()
     if len(ID_map) != len(test):
         print 'Error: ID_map len. != test len.'
