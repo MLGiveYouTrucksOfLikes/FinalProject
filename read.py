@@ -9,14 +9,19 @@ def read_sample_train():
     ID_check = []
     X_train = []
     Y_train = []
-    readDepthLimit = 100000
+    '''
+        Limit is used to limit the maximum data size
+    '''
+    readDepthLimit = 90000
+    
     print 'Reading Sample_train_x.csv & Truth_train.csv...'
     with open('../ML_final_project/sample_train_x.csv', 'r') as f:
         reader = csv.reader(f)
         X_train = np.array(list(reader)[1:]).astype(float)
         ID_map = X_train[:, 0]
-        #X_train = X_train[:, 1:]
-        # Start from 5
+        '''
+            Limit could be canceled by setting readDepthLimit = len(ID_map) here
+        '''
         X_train = normalize(X_train[:, 5:][:readDepthLimit])
     f.close()
     with open('../ML_final_project/truth_train.csv', 'r') as f:

@@ -22,7 +22,7 @@ def make_csv(ID, answer):
     if len(ID) != len(answer):
         print 'Error: make failed due to diff. len'
         return
-    with open('ans.csv', 'wb') as f:
+    with open(sys.argv[1]+'_predict.csv', 'wb') as f:
         for index in xrange(len(ID)):
             f.write(str(int(ID[index]))+','+str(answer[index])+'\n')
     f.close()

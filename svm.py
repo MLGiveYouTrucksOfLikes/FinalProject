@@ -12,7 +12,7 @@ def main():
    model = doSVM((X_train, Y_train), (c, k))
    print 'Store the model...'
    current = str(time.time())
-   joblib.dump(model, 'model_'+k+'_'+current+'.pkl')
+   joblib.dump(model, 'model/model_'+k+'_'+current+'.pkl')
    print 'Using model to predict'
    predict = model.predict(X_train)
    Ein = np.count_nonzero(predict != Y_train)
@@ -33,7 +33,7 @@ def doSVM(data, arg):
     if arg[1] == 'rbf':
         model = svm.SVC(C=arg[0], kernel=arg[1], gamma=1, tol=1e-7, shrinking=True, verbose=True)
     elif arg[1] == 'linear':
-        model = svm.SVC(C=arg[0], kernel=arg[1], shrinking=True, verbose=True, probability=True)
+        model = svm.SVC(C=arg[0], kernel=arg[1], shrinking=True, verbose=True)
     else:
         model = svm.SVC(C=arg[0], kernel=arg[1], degree=2, gamma=1, coef0=1, tol=1e-4, shrinking=True, verbose=True)
     model.fit(data[0], data[1])
