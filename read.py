@@ -32,7 +32,7 @@ def read_sample_train():
         reader = csv.reader(f)
         Y_train = np.array(list(reader)).astype(int)
         ID_check = Y_train[:, 0]
-        Y_train = np.ravel(Y_train[:, 1:])[:readDepthLimit]
+        Y_train = np.ravel(Y_train[:, 1:])#[:readDepthLimit]
     if len(Y_train) != len(X_train):
         print 'Error: Y"s len should equal to X"s len!'
         sys.exit(0)
