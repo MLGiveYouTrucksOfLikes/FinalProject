@@ -33,7 +33,7 @@ def main():
    current = str(int(time.time()))
    if save == 1:
        print 'Store the model...'
-       joblib.dump(bestModel, 'model/model_'+k+'_'+current+'.pkl')
+       joblib.dump(bestModel, 'model/model_'+k+'_c'+str(c)+'_fold'+str(fold)+'.pkl')
    print '*********************************************************************'
    print '                            Best Eval = ', bestEval
    print '                            Current Time = ', current
@@ -61,7 +61,7 @@ def doSVM(data, arg):
     elif arg[1] == 'linear':
         model = svm.SVC(C=arg[0], kernel=arg[1], shrinking=True, verbose=True)
     elif arg[1] == 'linearSVC':
-        model = svm.LinearSVC(C=arg[0], verbose=True)
+        model = svm.LinearSVC(C=arg[0], verbose=True, max_iter = 1000)
     else:
         model = svm.SVC(C=arg[0], kernel=arg[1], degree=2, gamma=1, coef0=1, tol=1e-4, shrinking=True, verbose=True)
     model.fit(data[0], data[1])
