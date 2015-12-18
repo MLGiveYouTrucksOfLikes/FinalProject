@@ -74,7 +74,12 @@ def printArgv():
     sys.exit(0)
 
 def doSVM(data, arg):
-    print 'Training kernel(or type) = ',arg[1],', C = ',arg[0], 'SVM...'
+    info = 'Training '+ str(arg[1]) + ' with c = '+ str(arg[0])
+    if arg[1] == 'rbf' or arg[1] == 'poly':
+        info += (' gamma = '+ sys.argv[5])
+    info += ' SVM ...'
+    print info
+
     model = 0
     if arg[1] == 'rbf':
         gamma = float(sys.argv[5])
