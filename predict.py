@@ -4,6 +4,8 @@ import read
 from sklearn import svm
 from sklearn.externals import joblib
 import sys
+import os
+from svm import checkDir 
 
 def predict():
     if len(sys.argv) < 2:
@@ -22,6 +24,7 @@ def make_csv(ID, answer):
     if len(ID) != len(answer):
         print 'Error: make failed due to diff. len'
         return
+    checkDir('csv')
     dirPath = '../csv/'
     with open(dirPath+sys.argv[1]+'_predict.csv', 'wb') as f:
         for index in xrange(len(ID)):

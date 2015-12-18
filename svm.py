@@ -5,6 +5,7 @@ from sklearn import svm
 from sklearn.externals import joblib
 import sys
 import time
+import os
 
 def main():
 
@@ -42,6 +43,7 @@ def main():
 def saveModel(model, enableSave = False):
     if enableSave:
         print 'Saving the model...'
+        checkDir('model')
         # python svm.py c kernel fold save gamma
         command = sys.argv
         modelName = 'model/model_' + command[2] + '_c' + command[1] + '_fold' + command[3]
@@ -49,6 +51,10 @@ def saveModel(model, enableSave = False):
             modelName += ('_gamma' + command[5])
         modelName += '.pkl'
         joblib.dump(model, modelName)
+
+def checkDir(name):
+    if not os.path.exists(name):
+        os.makedir(name)
 
 def handleArgv():
     if len(sys.argv) < 5:
