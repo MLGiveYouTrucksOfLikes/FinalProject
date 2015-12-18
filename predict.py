@@ -24,8 +24,8 @@ def make_csv(ID, answer):
         print 'Error: make failed due to diff. len'
         return
     checkDir('csv')
-    dirPath = '../csv/'
-    with open(dirPath+sys.argv[1]+'_predict.csv', 'wb') as f:
+    dirPath = './csv/'
+    with open(dirPath+sys.argv[1][5:]+'_predict.csv', 'wb') as f:
         for index in xrange(len(ID)):
             f.write(str(int(ID[index]))+','+str(answer[index])+'\n')
     f.close()
