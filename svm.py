@@ -63,7 +63,8 @@ def handleArgv():
     if sys.argv[2] != 'rbf' and sys.argv[2] != 'linear' and sys.argv[2] != 'poly' and sys.argv[2] != 'linearSVC':
         print 'Error: Second argv should be [rbf||linear||poly||linearSVC]'
         printArgv()
-    if sys.argv[2] == 'rbf' or sys.argv[2] == 'poly' and len(sys.argv) < 6:
+    if (sys.argv[2] == 'rbf' or sys.argv[2] == 'poly') and len(sys.argv) < 6:
+        print len(sys.argv)
         print 'Error: When model = rbf or poly, should input gamma'
         printArgv()
     return float(sys.argv[1]), sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
