@@ -54,7 +54,7 @@ def saveModel(model, enableSave = False):
 
 def checkDir(name):
     if not os.path.exists(name):
-        os.makedir(name)
+        os.makedirs(name)
 
 def handleArgv():
     if len(sys.argv) < 5:

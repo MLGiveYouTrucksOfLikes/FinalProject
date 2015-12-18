@@ -4,7 +4,6 @@ import read
 from sklearn import svm
 from sklearn.externals import joblib
 import sys
-import os
 from svm import checkDir 
 
 def predict():
