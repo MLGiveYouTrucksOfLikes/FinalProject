@@ -11,10 +11,10 @@ def main():
 
    c, k , fold, save= handleArgv()
    general_E = []
-   _, X_train, _ = read.read_sample_train_withoutReduce()
+   _, X_train, _ = read.read_sample_train()
    for i in xrange(X_train.shape[1]):
        print 'Deleteing ', i , 'th feature'
-       ID_map, X_train, Y_train = read.read_sample_train_withoutReduce()
+       ID_map, X_train, Y_train = read.read_sample_train()
        X_train = np.delete(X_train, i, axis=1)
        arr = np.arange(len(Y_train))
        np.random.shuffle(arr)
@@ -43,6 +43,13 @@ def main():
        print '                            Current Time = ', current
        print '*********************************************************************'
        general_E.append((i, sum(avgEval)/len(avgEval)))
+   outputSelectResult(general_E)
+
+def outputSelectResult(tupleInputList):
+    print 'Writing Select Results...'
+    with open('select_result', 'w') as f:
+        for tupleInput in tupleInputList:
+            f.write(str(tupleInput[0])+','+str(tupleInput[1])+'\n')
 
 def saveModel(model, enableSave = False):
     if enableSave:
@@ -99,4 +106,6 @@ def doSVM(data, arg):
     return model
 
 if __name__ == '__main__':
+    # test write output
+    #outputSelectResult([(1,0.231),(3,231.23),(4,.2312)])
     main()
