@@ -6,6 +6,25 @@ from sklearn.preprocessing import normalize
 from sklearn.preprocessing import scale
 
 def return_picked_list():
+    '''
+        user_log_num,                   True
+        course_log_num,                 False
+        take_course_num,                False
+        take_user_num,                  False
+        log_num,                        True
+        server_nagivate,                True
+        server_access,                  True
+        server_problem,                 False
+        browser_access,                 True
+        browser_problem,                True
+        browser_page_close,             True
+        browser_video,                  True
+        server_discussion,              False
+        server_wiki,                    False
+        chapter_count,                  True
+        sequential_count,               True
+        video_count                     True
+    '''
     return [True, False, False, False, True, True, True, False, True, True, True, True, False, False, True, True, True]
 
 def pick_out_data(x):
