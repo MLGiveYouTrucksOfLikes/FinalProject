@@ -3,7 +3,6 @@ import numpy as np
 import read
 from sklearn import svm
 from sklearn.externals import joblib
-import sklearn_feature_select
 import sys
 import time
 import os
@@ -11,8 +10,8 @@ import os
 def main():
 
    c, k , fold, save= handleArgv()
-
-   ID_map, X_train, Y_train = read.read_sample_train()
+   normalization_way = 'scale'
+   ID_map, X_train, Y_train = read.read_sample_train(normalization_way)
    '''
     Cross Validation
    '''

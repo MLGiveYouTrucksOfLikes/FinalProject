@@ -10,7 +10,8 @@ def predict():
     if len(sys.argv) < 2:
         print 'Error: Short of argv -> python predict.py [model]'
         sys.exit(0)
-    Test_ID_map, test = read.read_truth()
+    normalization_way = 'scale'
+    Test_ID_map, test = read.read_truth(normalization_way)
     print 'Load model...'
     model = joblib.load(sys.argv[1])
     print 'Using model to predict...'
