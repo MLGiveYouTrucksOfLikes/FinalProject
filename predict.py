@@ -45,4 +45,6 @@ def make_csv(ID, answer):
     f.close()
 
 if __name__ == "__main__":
-    predict()
+    #TODO
+    print 'Current predict.py will not work !'
+    #predict()
