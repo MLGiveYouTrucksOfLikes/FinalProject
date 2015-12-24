@@ -8,8 +8,8 @@ from sklearn.preprocessing import scale
 def return_picked_list():
     '''
         user_log_num,                   True
-        course_log_num,                 False
-        take_course_num,                False
+        course_log_num,                 True
+        take_course_num,                True
         take_user_num,                  False
         log_num,                        True
         server_nagivate,                True
@@ -25,7 +25,7 @@ def return_picked_list():
         sequential_count,               True
         video_count                     True
     '''
-    return [True, False, False, False, True, True, True, False, True, True, True, True, False, False, True, True, True]
+    return [True, True, True, False, True, True, True, False, True, True, True, True, False, False, True, True, True]
 
 def pick_out_data(x):
     picked = return_picked_list()
