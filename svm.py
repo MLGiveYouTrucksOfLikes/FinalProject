@@ -34,13 +34,13 @@ def main():
            bestEval = currentEval
            bestModel = currentModel
    current = str(int(time.time()))
-   saveModel(bestModel, save)
+   saveModel(bestModel, save, normalization_way)
    print '*********************************************************************'
    print '                            Best Eval = ', bestEval
    print '                            Current Time = ', current
    print '*********************************************************************'
 
-def saveModel(model, enableSave = False):
+def saveModel(model, enableSave = False, normalization_way):
     if enableSave:
         print 'Saving the model...'
         checkDir('model')
@@ -49,7 +49,7 @@ def saveModel(model, enableSave = False):
         modelName = 'model/model_' + command[2] + '_c' + command[1] + '_fold' + command[3]
         if command[2] == 'rbf' or command[2] == 'poly':
             modelName += ('_gamma' + command[5])
-        modelName += '.pkl'
+        modelName += ('_'+normalization_way+'.pkl')
         joblib.dump(model, modelName)
 
 def checkDir(name):
