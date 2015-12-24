@@ -7,12 +7,13 @@ import sklearn_feature_select
 import sys
 import time
 import os
-
+import predict
 def main():
 
    c, k , fold, save= handleArgv()
 
-   ID_map, X_train, Y_train = read.read_sample_train()
+   #ID_map, X_train, Y_train = read.read_sample_train()
+   ID_map, X_train, Y_train, X_test =  sklearn_feature_select.feature_select()
    '''
     Cross Validation
    '''
@@ -40,6 +41,9 @@ def main():
    print '                            Best Eval = ', bestEval
    print '                            Current Time = ', current
    print '*********************************************************************'
+
+   predict.predict_withoutARGV(ID_map, X_test, bestModel)
+
 
 def saveModel(model, enableSave = False):
     if enableSave:

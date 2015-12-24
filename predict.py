@@ -6,6 +6,20 @@ from sklearn.externals import joblib
 import sys
 from svm import checkDir 
 
+def predict_withoutARGV(ID, X_test, model):
+    print 'Using model to predict...'
+    predict = model.predict(X_test)
+    print 'Making output csv...'
+    make_csv_withoutARGV(ID, predict)
+
+def make_csv_withoutARGV(ID, ans):
+    checkDir('csv')
+    dirPath = './csv/'
+    with open(dirPath+'WithoutARGV_predict.csv', 'wb') as f:
+        for index in xrange(len(ID)):
+            f.write(str(int(ID[index]))+','+str(answer[index])+'\n')
+    f.close()
+
 def predict():
     if len(sys.argv) < 2:
         print 'Error: Short of argv -> python predict.py [model]'
