@@ -10,7 +10,7 @@ import os
 def main():
 
    c, k , fold, save= handleArgv()
-   normalization_way = 'scale'
+   normalization_way = 'normal'
    ID_map, X_train, Y_train = read.read_sample_train(normalization_way)
    '''
     Cross Validation
@@ -34,13 +34,13 @@ def main():
            bestEval = currentEval
            bestModel = currentModel
    current = str(int(time.time()))
-   saveModel(bestModel, save, normalization_way)
+   saveModel(bestModel,  normalization_way, save)
    print '*********************************************************************'
    print '                            Best Eval = ', bestEval
    print '                            Current Time = ', current
    print '*********************************************************************'
 
-def saveModel(model, enableSave = False, normalization_way):
+def saveModel(model,  normalization_way, enableSave = False):
     if enableSave:
         print 'Saving the model...'
         checkDir('model')

@@ -30,7 +30,7 @@ def do_normalize(data, normalization_way):
     elif normalization_way == 'scale':
         data = scale(data)
     else:
-        data = normal(data)
+        data = normalize(data)
     return data
 
 
