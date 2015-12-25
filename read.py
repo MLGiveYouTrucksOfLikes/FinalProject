@@ -4,6 +4,8 @@ import csv
 import sys
 from sklearn.preprocessing import normalize
 from sklearn.preprocessing import scale
+from sklearn.decomposition import PCA
+
 
 def return_picked_list():
     '''
@@ -33,7 +35,7 @@ def return_picked_list():
         video_count                     True
     '''
     # Doge Version of feature selection
-    #return [True, True, True, True, True, True, True, True, True, True, True, True, False, False, True, True, True]
+    #return [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
     #
     return [True, True, False, True, True, True, True, True, True, True, False, True, False, False, True, True, True]
 
@@ -62,6 +64,9 @@ def do_normalize(data, normalization_way):
         data = normalize(data)
     return data
 
+def do_PCA(x):
+    pca = PCA().fit(x)
+    return pca.transform(x)
 
 def read_sample_train(normalization_way):
     ID_map = []
@@ -74,7 +79,7 @@ def read_sample_train(normalization_way):
         reader = csv.reader(f)
         X_train = np.array(list(reader)[1:]).astype(float)
         ID_map = X_train[:, 0]
-        X_train = do_normalize(pick_out_data(X_train[:, 1:]), normalization_way)
+        X_train = do_PCA(do_normalize(pick_out_data(X_train[:, 1:]), normalization_way))
     f.close()
     with open('../ML_final_project/truth_train.csv', 'r') as f:
         reader = csv.reader(f)
@@ -98,7 +103,7 @@ def read_truth(normalization_way):
         reader = csv.reader(f)
         test = np.array(list(reader)[1:]).astype(float)
         ID_map = test[:, 0]
-        test = do_normalize(pick_out_data(test[:, 1:]) , normalization_way)
+        test = do_PCA(do_normalize(pick_out_data(test[:, 1:]) , normalization_way))
     f.close()
     if len(ID_map) != len(test):
         print 'Error: ID_map len. != test len.'

@@ -5,6 +5,12 @@ import numpy as np
 from sklearn.externals import joblib
 from sklearn import cross_validation
 
+'''
+    n_estimators = 200 , rate = 0.3 , Score ~= .8701
+
+'''
+
+
 def do_cross_validation(x, y , percent):
     print 'Cutting cross val. data...'
     x_train, x_test, y_train, y_test = \
@@ -14,11 +20,12 @@ def do_cross_validation(x, y , percent):
     return x_train, x_test, y_train, y_test
 
 def train_argu():
-    n_ = [10, 100, 200]
-    rate = [.01, .1, .5]
+    n_ = [50, 100, 200, 500]
+    rate = [.01, .1, .3, .5]
     bestscore, bestn, bestrate = 0, 0, 0
     for n in n_:
         for r in rate:
+            print 'Training n = ',n,' r = ',rate
             score = grad_tree_adaboost(n, r, False)
             if score > bestscore:
                 bestscore = score
@@ -31,8 +38,10 @@ def train_argu():
 
 def grad_tree_adaboost(n_estimators=100, learning_rate=.1, saveModel = False):
     # Argument to change
+    # normal Best score =  0.860492124555
+    # scale Best score =  0.871733449477
     normalization_way = 'scale'
-    fold = 5
+    fold = 7
     #
     ID_map, X_train, Y_train = read.read_sample_train(normalization_way)
     kf = cross_validation.KFold(len(X_train), n_folds=fold, shuffle=True)
@@ -60,10 +69,10 @@ def grad_tree_adaboost(n_estimators=100, learning_rate=.1, saveModel = False):
         print '******************************************************************************************'
     print 'Best score = ', bestscore
     print 'Dumping best model...'
-    if saveModel:
+    if saveModel or bestscore > .87:
         joblib.dump(bestmodel,'model/Grad_Tree_Adaboost_n'+str(n_estimators)+'_rate'+str(learning_rate)+'_fold'+str(fold)+'.pkl')
     return bestscore
 
 if __name__ == '__main__':
     #train_argu()
-    grad_tree_adaboost(300, .7, True)
+    grad_tree_adaboost()
