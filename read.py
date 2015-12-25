@@ -7,17 +7,24 @@ from sklearn.preprocessing import scale
 
 def return_picked_list():
     '''
+        Grad. Tree Adaboost feature score
+        [ 0.08594461  0.06362151  0.03924823  0.09460454  0.07434367  0.09262258
+          0.14555613  0.02134933  0.03961706  0.10611899  0.03450932  0.04020352
+            0.02979557  0.02226752  0.0315223   0.03750242  0.04117269]
+
+    '''
+    '''
         user_log_num,                   True
         course_log_num,                 True
-        take_course_num,                True
-        take_user_num,                  False
+        take_course_num,                False
+        take_user_num,                  True
         log_num,                        True
         server_nagivate,                True
         server_access,                  True
-        server_problem,                 False
+        server_problem,                 True
         browser_access,                 True
         browser_problem,                True
-        browser_page_close,             True
+        browser_page_close,             False
         browser_video,                  True
         server_discussion,              False
         server_wiki,                    False
@@ -25,7 +32,10 @@ def return_picked_list():
         sequential_count,               True
         video_count                     True
     '''
-    return [True, True, True, False, True, True, True, False, True, True, True, True, False, False, True, True, True]
+    # Doge Version of feature selection
+    #return [True, True, True, True, True, True, True, True, True, True, True, True, False, False, True, True, True]
+    #
+    return [True, True, False, True, True, True, True, True, True, True, False, True, False, False, True, True, True]
 
 def pick_out_data(x):
     picked = return_picked_list()
